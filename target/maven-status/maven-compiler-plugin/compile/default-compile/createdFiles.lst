@@ -1,0 +1,8 @@
+XMLReader\Controllers.class
+XMLClasses\Place.class
+XMLClasses\Day.class
+XMLReader\Application.class
+XMLReader\XMLReader.class
+XMLClasses\Night.class
+XMLClasses\Forecast.class
+XMLClasses\Wind.class

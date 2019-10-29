@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title> Forecast </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        table#tb1, table#tb2, th#th1, th#th2, th#th3, th#th4, th#th5, th#th6, td#td1, td#td2, td#td3, td#td4, td#td5, td#td6 {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        table {background-color: darkgray;}
+
+        h1 {
+            color: darkblue;
+        }
+
+        body {
+            background-color: aliceblue;
+        }
+    </style>
+
+</head>
+<br>
+<body>
+<h1 th:align="center">Weather forecast for the next four days</h1>
+
+<table th:align="center" id="tb1" th:width="1000">
+    <thead>
+    <tr>
+        <th id="th1"> Date </th>
+        <th id="th2"> Day </th>
+        <th id="th3"> Night </th>
+    </tr>
+    </thead>
+    <tbody th:align="center">
+    <tr th:each="forecast : ${forecasts}">
+        <td id="td1"><span th:text="${forecast.date}"></span></td>
+        <td id="td2"><span></span>
+            <table>
+                <thead th:align="center">
+                <tr th:text="'Phenomenon - ' + ${forecast.day.phenomenon} + ', Minimum temperature - ' + ${forecast.day.tempmin} + '°C, Maximum temperature - ' + ${forecast.day.tempmax} + '°C, Detailed overview - ' +  ${forecast.day.text}"></tr>
+                </thead>
+            </table>
+        </td>
+        <td id="td3"><span></span>
+            <table>
+                <thead th:align="center">
+                <tr th:text="'Phenomenon - ' + ${forecast.night.phenomenon} + ', Minimum temperature - ' + ${forecast.night.tempmin} + '°C, Maximum temperature - ' + ${forecast.night.tempmax} + '°C, Detailed overview - ' +  ${forecast.night.text}"></tr>
+                </thead>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+
+<table th:align="center" id="tb2" th:width="1000">
+    <thead>
+    <tr>
+        <th id="th4"> Date </th>
+        <th id="th5"> Day </th>
+        <th id="th6"> Night </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="forecast : ${forecasts}" th:if="${not forecast.day.places.isEmpty()}">
+        <td  id="td4"><span th:text="${forecast.date}"></span></td>
+        <td id="td5"><span></span>
+            <table>
+                <thead>
+                <tr th:if="${not forecast.day.places.isEmpty()}">
+                    <th> Peipsi </th>
+                </tr>
+                </thead>
+                <tbody th:align="center">
+                <tr>
+                    <td><span th:text="${forecast.day.peipsi}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div th:align="center">
+                <table th:if="${not forecast.day.winds.isEmpty()}">
+                    <thead>
+                    <tr>
+                        <th> Forecast </th>
+                    </tr>
+                    </thead>
+                    <tbody th:align="center">
+                    <tr th:each="place : ${forecast.day.places}">
+                        <td><span th:text="${place.name} + ' - ' + ${place.phenomenon} + ' ' + ${place.tempmin} + '°C'"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div th:align="center">
+                <table th:if="${not forecast.day.winds.isEmpty()}">
+                    <thead>
+                    <tr>
+                        <th> Wind direction & speed </th>
+                    </tr>
+                    </thead>
+                    <tbody th:align="center">
+                    <tr th:each="wind : ${forecast.day.winds}">
+                        <td><span th:text="${wind.name} + ' ' + ${wind.direction} + ' '+ ${wind.speedmin} + '-' + ${wind.speedmax} + 'm/s'"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </td>
+        <td id="td6">
+
+            <table>
+                <thead>
+                <tr th:if="${not forecast.night.places.isEmpty()}">
+                    <th> Peipsi </th>
+                </tr>
+                </thead>
+                <tbody th:align="center">
+                <tr>
+                    <td><span th:text="${forecast.night.peipsi}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div th:align="center" >
+                <table th:if="${not forecast.night.places.isEmpty()}">
+                    <thead>
+                    <tr>
+                        <th> Forecast </th>
+                    </tr>
+                    </thead>
+                    <tbody th:align="center">
+                    <tr th:each="place : ${forecast.night.places}">
+                        <td><span th:text="${place.name} + ' - ' + ${place.phenomenon} + ' ' + ${place.tempmin} + '°C'"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:align="center" >
+                <table th:if="${not forecast.night.winds.isEmpty()}">
+                    <thead>
+                    <tr>
+                        <th> Wind direction & speed </th>
+                    </tr>
+                    </thead>
+                    <tbody th:align="center">
+                    <tr th:each="wind : ${forecast.night.winds}">
+                        <td><span th:text="${wind.name} + ' - ' + ${wind.direction} + ' '+ ${wind.speedmin} + '-' + ${wind.speedmax} + 'm/s'"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </tbody>
+    </table>
+</body>
+</html>
